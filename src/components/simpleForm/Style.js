@@ -45,4 +45,8 @@ export default styled.div`
     width: 100%;
     background-color: rgba(0, 0, 0, 0.1);
   }
+
+  .sauceName {
+    margin: 0 6px 0 24px;
+  }
 `;

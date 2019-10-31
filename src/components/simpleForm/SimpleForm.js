@@ -20,12 +20,40 @@ const InputAdapter = ({ input, meta, ...rest }) => (
   />
 );
 
+const { TextArea } = Input;
+const TextAreaAdapter = ({ input, meta, ...rest }) => (
+  <TextArea
+    {...rest}
+    value={input.value}
+    onChange={(event, value) => input.onChange(event, value)}
+    rows={4}
+    // errorText={meta.touched ? meta.error : ""}
+  />
+);
+
 const CheckboxAdapter = ({ input, meta, ...rest }) => (
   <Checkbox
     {...rest}
     checked={input.value}
     onChange={(event, value) => input.onChange(event, value)}
     allowClear
+    // errorText={meta.touched ? meta.error : ""}
+  />
+);
+
+const CheckboxAdapter2 = ({ input, meta, ...rest }) => (
+  <Checkbox
+    checked={input.value.includes("ketchup")}
+    onChange={(event, value) => input.onChange(event, value)}
+    // errorText={meta.touched ? meta.error : ""}
+  />
+);
+
+//mayonnaise ketchup
+const CheckboxAdapter3 = ({ input, meta, ...rest }) => (
+  <Checkbox
+    checked={input.value.includes("mayonnaise")}
+    onChange={(event, value) => input.onChange(event, value)}
     // errorText={meta.touched ? meta.error : ""}
   />
 );
@@ -166,12 +194,32 @@ const SimpleForm = () => (
             <label className="label">Best Stooge:</label>
             <Field name="stooge" component={RadioAdapter} />
           </div>
+          <div className="formRow">
+            <label className="label">Notes</label>
+            <Field
+              name="notes"
+              component={TextAreaAdapter}
+              placeholder="Notes"
+            />
+          </div>
+          <div className="formRow">
+            <label className="label">Sauces:</label>
+            <span className="sauceName">Ketchup</span>
+            <Field name="sauces" component={CheckboxAdapter2} value="ketchup" />
+            <span className="sauceName">Mayonnaise</span>
+            <Field
+              name="sauces"
+              component={CheckboxAdapter3}
+              value="mayonnaise"
+            />
+          </div>
           <div className="btnsRow">
             <Button onClick={form.reset} disabled={submitting || pristine}>
               clear
             </Button>
             <Button htmlType="submit">submit</Button>
           </div>
+          {/* output the values of form */}
           <pre>{JSON.stringify(values, 0, 2)}</pre>
         </form>
       )}
