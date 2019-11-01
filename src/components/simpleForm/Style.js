@@ -49,4 +49,41 @@ export default styled.div`
   .sauceName {
     margin: 0 6px 0 24px;
   }
+
+  .error {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    padding: 20px 60px 20px 20px;
+    display: inline-block;
+    padding: 8px 11px;
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+    font-weight: 600;
+    line-height: 1.2;
+    width: 50%;
+    background-color: #d9d9d9;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-size: 42px;
+    // box-shadow: 0 0 2px rgba(1, 1, 1, 0.56);
+    transform: translateX(-50%);
+    outline: none;
+    transition: 0.3s;
+  }
+
+  .error::before {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 10px 0 10px;
+    border-color: #d9d9d9 transparent transparent transparent;
+  }
 `;

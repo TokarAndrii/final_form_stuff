@@ -1,155 +1,26 @@
 import React from "react";
 import { Form, Field } from "react-final-form";
-import { Input, Button, Select, Radio, Checkbox } from "antd";
+import { Input, Button } from "antd";
 import Styles from "./Style";
+import { required } from "../../utils/formValidators";
+import {
+  InputAdapter,
+  TextAreaAdapter,
+  CheckboxAdapter,
+  CheckboxAdapter2,
+  CheckboxAdapter3,
+  SelectAdapterToppings,
+  SelectAdapterColors,
+  RadioAdapter,
+  initialRadioValue
+} from "./adapters/";
 
+// some kind of submit stuff
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-
 const onSubmit = async values => {
   await sleep(300);
   window.alert(JSON.stringify(values, 0, 2));
 };
-
-const InputAdapter = ({ input, meta, ...rest }) => (
-  <Input
-    {...rest}
-    value={input.value}
-    onChange={(event, value) => input.onChange(event, value)}
-    allowClear
-    // errorText={meta.touched ? meta.error : ""}
-  />
-);
-
-const { TextArea } = Input;
-const TextAreaAdapter = ({ input, meta, ...rest }) => (
-  <TextArea
-    {...rest}
-    value={input.value}
-    onChange={(event, value) => input.onChange(event, value)}
-    rows={4}
-    // errorText={meta.touched ? meta.error : ""}
-  />
-);
-
-const CheckboxAdapter = ({ input, meta, ...rest }) => (
-  <Checkbox
-    {...rest}
-    checked={input.value}
-    onChange={(event, value) => input.onChange(event, value)}
-    allowClear
-    // errorText={meta.touched ? meta.error : ""}
-  />
-);
-
-const CheckboxAdapter2 = ({ input, meta, ...rest }) => (
-  <Checkbox
-    checked={input.value.includes("ketchup")}
-    onChange={(event, value) => input.onChange(event, value)}
-    // errorText={meta.touched ? meta.error : ""}
-  />
-);
-
-//mayonnaise ketchup
-const CheckboxAdapter3 = ({ input, meta, ...rest }) => (
-  <Checkbox
-    checked={input.value.includes("mayonnaise")}
-    onChange={(event, value) => input.onChange(event, value)}
-    // errorText={meta.touched ? meta.error : ""}
-  />
-);
-
-const radioOptions = [
-  { label: "Larry", value: "Larry" },
-  { label: "Moe", value: "Moe" },
-  { label: "Curly", value: "Curly" }
-];
-
-const initialRadioValue = radioOptions[2].value;
-
-const RadioAdapter = ({ input, meta, ...rest }) => (
-  <Radio.Group
-    {...rest}
-    options={radioOptions}
-    onChange={(event, value) => input.onChange(event, value)}
-    defaultValue={initialRadioValue}
-    value={input.value}
-    // errorText={meta.touched ? meta.error : ""}
-  />
-);
-
-const SelectAdapterColors = ({ input, meta, ...rest }) => (
-  <Select
-    {...rest}
-    value={input.value}
-    onChange={(event, value) => input.onChange(event, value)}
-    // errorText={meta.touched ? meta.error : ""}
-  >
-    <option value="#ff0000">
-      <span role="img" aria-label="Red">
-        ❤️
-      </span>
-      Red
-    </option>
-    <option value="#00ff00">
-      <span role="img" aria-label="Green">
-        💚
-      </span>
-      Green
-    </option>
-    <option value="#0000ff">
-      <span role="img" aria-label="Blue">
-        💙
-      </span>
-      Blue
-    </option>
-  </Select>
-);
-
-const SelectAdapterToppings = ({ input, meta, ...rest }) => (
-  <Select
-    {...rest}
-    value={input.value}
-    onChange={(event, value) => input.onChange(event, value)}
-    // errorText={meta.touched ? meta.error : ""}
-  >
-    <option value="chicken">
-      <span role="img" aria-label="Blue">
-        🐓
-      </span>
-      Chicken
-    </option>
-    <option value="ham">
-      <span role="img" aria-label="Blue">
-        🐷
-      </span>
-      Ham
-    </option>
-    <option value="mushrooms">
-      <span role="img" aria-label="Blue">
-        🍄
-      </span>
-      Mushrooms
-    </option>
-    <option value="cheese">
-      <span role="img" aria-label="Blue">
-        🧀
-      </span>
-      Cheese
-    </option>
-    <option value="tuna">
-      <span role="img" aria-label="Blue">
-        🐟
-      </span>
-      Tuna
-    </option>
-    <option value="pineapple">
-      <span role="img" aria-label="Blue">
-        🍍
-      </span>
-      Pineapple
-    </option>
-  </Select>
-);
 
 const SimpleForm = () => (
   <Styles>
@@ -166,7 +37,33 @@ const SimpleForm = () => (
               component={InputAdapter}
               type="text"
               placeholder="First Name"
+              validate={required}
             />
+          </div>
+          {/* exapmple different way of rendering from previus one */}
+          <div className="formRow">
+            <label className="label">LastName:</label>
+            <Field
+              name="lastName"
+              type="text"
+              placeholder="Last Name"
+              validate={required}
+            >
+              {({ input, meta, ...rest }) => (
+                <div style={{ position: "relative" }}>
+                  <Input
+                    {...rest}
+                    value={input.value}
+                    onChange={(event, value) => input.onChange(event, value)}
+                    allowClear
+                    errorText={meta.touched ? meta.error : ""}
+                  />
+                  {meta.touched && meta.error && (
+                    <span className="error">{meta.error}</span>
+                  )}
+                </div>
+              )}
+            </Field>
           </div>
           <div className="formRow">
             <label className="label">Favorite Color:</label>
@@ -175,6 +72,7 @@ const SimpleForm = () => (
               component={SelectAdapterColors}
               type="text"
               allowClear
+              validate={required}
             />
           </div>
           <div className="formRow">
@@ -200,6 +98,7 @@ const SimpleForm = () => (
               name="notes"
               component={TextAreaAdapter}
               placeholder="Notes"
+              validate={required}
             />
           </div>
           <div className="formRow">
@@ -219,7 +118,7 @@ const SimpleForm = () => (
             </Button>
             <Button htmlType="submit">submit</Button>
           </div>
-          {/* output the values of form */}
+          {/* simple output all the values of form. Just remove it at real project*/}
           <pre>{JSON.stringify(values, 0, 2)}</pre>
         </form>
       )}
