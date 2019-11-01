@@ -54,48 +54,51 @@ export const CheckboxAdapter3 = ({ input, meta, ...rest }) => (
 );
 
 export const SelectAdapterToppings = ({ input, meta, ...rest }) => (
-  <Select
-    {...rest}
-    value={input.value}
-    onChange={(event, value) => input.onChange(event, value)}
-  >
-    <Select.Option value="chicken">
-      <span role="img" aria-label="Blue">
-        🐓
-      </span>
-      Chicken
-    </Select.Option>
-    <Select.Option value="ham">
-      <span role="img" aria-label="Blue">
-        🐷
-      </span>
-      Ham
-    </Select.Option>
-    <Select.Option value="mushrooms">
-      <span role="img" aria-label="Blue">
-        🍄
-      </span>
-      Mushrooms
-    </Select.Option>
-    <Select.Option value="cheese">
-      <span role="img" aria-label="Blue">
-        🧀
-      </span>
-      Cheese
-    </Select.Option>
-    <Select.Option value="tuna">
-      <span role="img" aria-label="Blue">
-        🐟
-      </span>
-      Tuna
-    </Select.Option>
-    <Select.Option value="pineapple">
-      <span role="img" aria-label="Blue">
-        🍍
-      </span>
-      Pineapple
-    </Select.Option>
-  </Select>
+  <div style={{ position: "relative" }}>
+    <Select
+      {...rest}
+      value={input.value}
+      onChange={(event, value) => input.onChange(event, value)}
+    >
+      <Select.Option value="chicken">
+        <span role="img" aria-label="Blue">
+          🐓
+        </span>
+        Chicken
+      </Select.Option>
+      <Select.Option value="ham">
+        <span role="img" aria-label="Blue">
+          🐷
+        </span>
+        Ham
+      </Select.Option>
+      <Select.Option value="mushrooms">
+        <span role="img" aria-label="Blue">
+          🍄
+        </span>
+        Mushrooms
+      </Select.Option>
+      <Select.Option value="cheese">
+        <span role="img" aria-label="Blue">
+          🧀
+        </span>
+        Cheese
+      </Select.Option>
+      <Select.Option value="tuna">
+        <span role="img" aria-label="Blue">
+          🐟
+        </span>
+        Tuna
+      </Select.Option>
+      <Select.Option value="pineapple">
+        <span role="img" aria-label="Blue">
+          🍍
+        </span>
+        Pineapple
+      </Select.Option>
+    </Select>
+    {meta.touched && meta.error && <span className="error">{meta.error}</span>}
+  </div>
 );
 
 export const SelectAdapterColors = ({ input, meta, ...rest }) => (

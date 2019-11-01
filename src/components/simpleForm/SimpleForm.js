@@ -2,7 +2,11 @@ import React from "react";
 import { Form, Field } from "react-final-form";
 import { Input, Button } from "antd";
 import Styles from "./Style";
-import { required } from "../../utils/formValidators";
+import {
+  required,
+  validateOnString,
+  minValueLength
+} from "../../utils/formValidators";
 import {
   InputAdapter,
   TextAreaAdapter,
@@ -22,6 +26,9 @@ const onSubmit = async values => {
   window.alert(JSON.stringify(values, 0, 2));
 };
 
+const composeValidators = (...validators) => value =>
+  validators.reduce((error, validator) => error || validator(value), undefined);
+
 const SimpleForm = () => (
   <Styles>
     <h2>SimpleForm</h2>
@@ -37,7 +44,11 @@ const SimpleForm = () => (
               component={InputAdapter}
               type="text"
               placeholder="First Name"
-              validate={required}
+              validate={composeValidators(
+                required,
+                validateOnString,
+                minValueLength
+              )}
             />
           </div>
           {/* exapmple different way of rendering from previus one */}
@@ -47,7 +58,11 @@ const SimpleForm = () => (
               name="lastName"
               type="text"
               placeholder="Last Name"
-              validate={required}
+              validate={composeValidators(
+                required,
+                validateOnString,
+                minValueLength
+              )}
             >
               {({ input, meta, ...rest }) => (
                 <div style={{ position: "relative" }}>
@@ -86,6 +101,7 @@ const SimpleForm = () => (
               component={SelectAdapterToppings}
               type="text"
               allowClear
+              validate={required}
             />
           </div>
           <div className="formRow">
